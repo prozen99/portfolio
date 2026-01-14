@@ -1,0 +1,20 @@
+package org.portfolio.portfolio.api.exception;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+import java.time.Instant;
+
+@Getter
+@AllArgsConstructor
+public class ErrorResponse {
+    private Instant timestamp;
+    private int status;
+    private String error;
+    private String message;
+    private String path;
+
+    public static ErrorResponse of(int status, String error, String message, String path) {
+        return new ErrorResponse(Instant.now(), status, error, message, path);
+    }
+}
