@@ -114,39 +114,34 @@ if (result.isSuccess()) {
 - **원인**: 커밋 내역이 없는 상태에서 푸시 시도.
 - **해결**: `git add .` -> `git commit`을 통해 로컬 스냅샷을 생성한 후 `push` 성공. Git 브랜치가 커밋 객체를 가리키는 포인터임을 학습.
 
----
+--- #Tech Stack
 
-💻 Backend
-Java 17: 최신 LTS 버전을 사용하여 레코드(Record), 텍스트 블록 등 현대적인 자바 문법 활용
+### Backend
 
-Spring Boot 3.x: 의존성 주입 및 자동 설정을 통한 효율적인 애플리케이션 개발
+- **Java 17**: 최신 LTS 버전을 사용하여 레코드(Record), 텍스트 블록 등 현대적인 자바 문법 활용
+- **Spring Boot 3.x**: 의존성 주입 및 자동 설정을 통한 효율적인 애플리케이션 개발
+- **Spring Data JPA**: 객체 지향적인 데이터 접근 및 엔티티 매핑
+- **QueryDSL 5.0**: 컴파일 타임 타입 체크가 가능한 동적 쿼리 구현 및 N+1 문제 최적화
+- **Spring Security**: (필요 시) 유저 인증 및 권한 관리 (RBAC)
 
-Spring Data JPA: 객체 지향적인 데이터 접근 및 엔티티 매핑
+### 🗄️ Storage & Concurrency
 
-QueryDSL 5.0: 컴파일 타임 타입 체크가 가능한 동적 쿼리 구현 및 N+1 문제 최적화
+- **H2 / MySQL**: 데이터 영속성 관리 및 트랜잭션 보장
+- **Pessimistic Lock (DB)**: 초고동시성 환경에서 재고 정합성을 보장하기 위한 Row-level 배타적 잠금 적용
 
-Spring Security: (필요 시) 유저 인증 및 권한 관리 (RBAC)
+### 🏗️ Architecture & Design
 
-🗄️ Storage & Concurrency
-H2 / MySQL: 데이터 영속성 관리 및 트랜잭션 보장
+- **Strategy Pattern**: 정액/정률 등 다양한 할인 정책을 런타임에 유연하게 교체 가능하도록 설계
+- **Validator Pattern**: 비즈니스 로직 진입 전 유효성 검증 책임을 분리하여 `OrderService`의 응집도 향상
+- **State Machine**: 결제 및 주문 상태(Ready, Paid, Failed)를 명확히 관리하여 상태 전이의 안정성 확보
 
-Pessimistic Lock (DB): 초고동시성 환경에서 재고 정합성을 보장하기 위한 Row-level 배타적 잠금 적용
+### 🧪 Test & Monitoring
 
-🏗️ Architecture & Design
-Strategy Pattern: 정액/정률 등 다양한 할인 정책을 런타임에 유연하게 교체 가능하도록 설계
+- **JUnit5 & AssertJ**: 단위 테스트 및 통합 테스트를 통한 비즈니스 로직 신뢰성 확보
+- **Hibernate Statistics**: 쿼리 실행 횟수 및 실행 시간을 수치화하여 N+1 문제 등 병목 지점 정량적 분석
+- **CountDownLatch & ExecutorService**: 멀티스레드 환경을 시뮬레이션하여 동시성 제어 로직 검증
 
-Validator Pattern: 비즈니스 로직 진입 전 유효성 검증 책임을 분리하여 OrderService의 응집도 향상
+### 🛠️ Infrastructure & Tools
 
-State Machine: 결제 및 주문 상태(Ready, Paid, Failed)를 명확히 관리하여 상태 전이의 안정성 확보
-
-🧪 Test & Monitoring
-JUnit5 & AssertJ: 단위 테스트 및 통합 테스트를 통한 비즈니스 로직 신뢰성 확보
-
-Hibernate Statistics: 쿼리 실행 횟수 및 실행 시간을 수치화하여 N+1 문제 등 병목 지점 정량적 분석
-
-CountDownLatch & ExecutorService: 멀티스레드 환경을 시뮬레이션하여 동시성 제어 로직 검증
-
-🛠️ Infrastructure & Tools
-Gradle: 프로젝트 빌드 및 의존성 관리
-
-Git / GitHub: 버전 관리 및 협업
+- **Gradle**: 프로젝트 빌드 및 의존성 관리
+- **Git / GitHub**: 버전 관리 및 협업
